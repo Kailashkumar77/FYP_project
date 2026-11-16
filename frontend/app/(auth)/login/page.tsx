@@ -2,15 +2,14 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Sparkles, Shield, User, ArrowRight, Lock, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Sparkles, ArrowRight, Lock, User, Eye, EyeOff, Globe } from "lucide-react";
 import { api } from "@/lib/api";
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -29,124 +28,158 @@ export default function LoginPage() {
       router.push("/dashboard");
     } catch (err: any) {
       setError(
-        err.response?.data?.detail || "Invalid login credentials. Please check your email and password."
+        err.response?.data?.detail || "Invalid login credentials. Please check your username and password."
       );
     } finally {
       setLoading(false);
     }
   };
 
-  const handleQuickFill = (type: "admin" | "agent") => {
-    if (type === "admin") {
-      setEmail("admin@intellicrm.ai");
-      setPassword("Admin123!");
-    } else {
-      setEmail("agent@intellicrm.ai");
-      setPassword("Agent123!");
-    }
-    setError(null);
-  };
-
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center px-4 py-12">
-      {/* Brand Header */}
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
-          <Sparkles className="w-6 h-6" />
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-            IntelliCRM <span className="text-xs px-2 py-0.5 rounded-md bg-blue-100 text-blue-700 font-bold border border-blue-200">AI</span>
-          </h1>
-          <p className="text-xs text-slate-500 font-medium">B2B CRM for Software Houses & IT Agencies</p>
+    <div className="min-h-screen bg-[#f0f4f9] flex flex-col justify-between items-center px-4 py-8 sm:py-12 selection:bg-blue-100">
+      <div className="w-full flex-1 flex items-center justify-center">
+        {/* Google-style Dual-Column Split Card */}
+        <div className="w-full max-w-6xl bg-white rounded-[28px] border border-[#e1e3e1] shadow-[0_1px_3px_0_rgba(60,64,67,0.3),0_4px_8px_3px_rgba(60,64,67,0.15)] flex flex-col overflow-hidden">
+          
+          {/* Main Content Area */}
+          <div className="p-8 sm:p-12 md:p-14 pb-8 sm:pb-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14">
+              
+              {/* Left Column: Brand, Title & Description (Google Style) */}
+              <div className="flex flex-col justify-between">
+                <div>
+                  {/* Brand Logo / Icon */}
+                  <div className="flex items-center gap-2.5 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-blue-500 flex items-center justify-center text-white shadow-md shadow-blue-500/25">
+                      <Sparkles className="w-5 h-5" />
+                    </div>
+                    <span className="text-xl font-bold tracking-tight text-[#1f1f1f]">
+                      IntelliCRM <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-bold border border-blue-200">AI</span>
+                    </span>
+                  </div>
+
+                  {/* Main Heading & Subtitle */}
+                  <h1 className="text-3xl sm:text-4xl font-normal text-[#1f1f1f] tracking-tight mb-3">
+                    Sign in
+                  </h1>
+                  <p className="text-base text-[#444746] font-normal leading-relaxed">
+                    to continue to your IntelliCRM Agency Workspace
+                  </p>
+                </div>
+
+                <div className="hidden md:block pt-6">
+                  <p className="text-xs text-[#5e5e5e] leading-relaxed">
+                    Enterprise B2B CRM powered by Predictive Scoring and GenAI workflows for Software Houses.
+                  </p>
+                </div>
+              </div>
+
+              {/* Right Column: Username & Password Inputs */}
+              <div className="flex flex-col justify-center">
+                {error && (
+                  <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 font-medium flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
+                    <span>{error}</span>
+                  </div>
+                )}
+
+                <form id="login-form" onSubmit={handleSubmit} className="space-y-6">
+                  {/* Username / Email field */}
+                  <div className="relative">
+                    <label className="block text-xs font-medium text-[#444746] mb-1.5">
+                      Username
+                    </label>
+                    <div className="relative">
+                      <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                      <input
+                        type="text"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="superAdmin or email"
+                        className="w-full pl-10 pr-4 py-3 text-sm bg-white border border-[#747775] hover:border-[#1f1f1f] rounded-lg text-[#1f1f1f] placeholder:text-[#8e918f] focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Password field */}
+                  <div className="relative">
+                    <label className="block text-xs font-medium text-[#444746] mb-1.5">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter your password"
+                        className="w-full pl-10 pr-11 py-3 text-sm bg-white border border-[#747775] hover:border-[#1f1f1f] rounded-lg text-[#1f1f1f] placeholder:text-[#8e918f] focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-3.5 text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer"
+                      >
+                        {showPassword ? (
+                          <EyeOff className="w-4 h-4" />
+                        ) : (
+                          <Eye className="w-4 h-4" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Notice Text */}
+                  <p className="text-xs text-[#444746] leading-relaxed">
+                    Need access to this CRM? Contact your workspace administrator to invite your account.
+                  </p>
+                </form>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Continuous Full-Width Horizontal Line */}
+          <hr className="w-full border-t border-[#e1e3e1] m-0" />
+
+          {/* Bottom Card Footer with Action Button */}
+          <div className="px-8 sm:px-12 md:px-14 py-4 sm:py-5 flex items-center justify-between bg-white">
+            
+            <div className="flex items-center justify-end w-full sm:w-auto ml-auto">
+              <button
+                type="submit"
+                form="login-form"
+                disabled={loading}
+                className="inline-flex items-center justify-center gap-2 px-8 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-all shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-60 cursor-pointer"
+              >
+                {loading ? (
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <>
+                    Next <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      {/* Login Card */}
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-200/90 p-8">
-        <div className="mb-6">
-          <h2 className="text-xl font-bold text-slate-900">Sign in to your workspace</h2>
-          <p className="text-xs text-slate-500 mt-1">Enter your credentials to access the CRM platform.</p>
+      {/* Outer Footer (Language / Help / Privacy / Terms) */}
+      <footer className="w-full max-w-4xl mt-6 px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#444746]">
+        <div className="flex items-center gap-1.5 cursor-pointer hover:text-slate-800">
+          <Globe className="w-3.5 h-3.5" />
+          <span>English (United States)</span>
         </div>
-
-        {error && (
-          <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 font-medium flex items-start gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
-            <span>{error}</span>
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-1.5">
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700">
-              Email Address
-            </label>
-            <div className="relative">
-              <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@agency.com"
-                className="w-full pl-10 pr-3.5 py-2 text-sm bg-white border border-slate-300 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700">
-                Password
-              </label>
-              <span className="text-[11px] text-blue-600 font-medium hover:underline cursor-pointer">
-                Forgot password?
-              </span>
-            </div>
-            <div className="relative">
-              <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full pl-10 pr-3.5 py-2 text-sm bg-white border border-slate-300 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
-              />
-            </div>
-          </div>
-
-          <Button type="submit" isLoading={loading} className="w-full mt-2 py-2.5">
-            Sign In <ArrowRight className="w-4 h-4 ml-1" />
-          </Button>
-        </form>
-
-        {/* Demo Accounts Quick-Fill Section */}
-        <div className="mt-8 pt-6 border-t border-slate-100">
-          <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider text-center mb-3">
-            Evaluation Demo Quick-Fill
-          </p>
-          <div className="grid grid-cols-2 gap-2.5">
-            <button
-              type="button"
-              onClick={() => handleQuickFill("admin")}
-              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200/80 border border-slate-200 transition-all cursor-pointer"
-            >
-              <Shield className="w-3.5 h-3.5 text-blue-600" /> Admin Demo
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickFill("agent")}
-              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200/80 border border-slate-200 transition-all cursor-pointer"
-            >
-              <User className="w-3.5 h-3.5 text-indigo-600" /> Sales Agent Demo
-            </button>
-          </div>
-          <p className="text-[10px] text-slate-400 text-center mt-2.5">
-            Connected to local PostgreSQL database seed.
-          </p>
+        <div className="flex items-center gap-6">
+          <span className="hover:text-slate-800 cursor-pointer">Help</span>
+          <span className="hover:text-slate-800 cursor-pointer">Privacy</span>
+          <span className="hover:text-slate-800 cursor-pointer">Terms</span>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }

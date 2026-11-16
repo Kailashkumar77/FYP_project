@@ -59,7 +59,7 @@ class RegisterRequest(BaseModel):
 
 
 class LoginRequest(BaseModel):
-    email: EmailStr
+    email: str = Field(..., description='Email or superAdmin username')
     password: str
 
 
@@ -97,3 +97,15 @@ class PipelineStageResponse(BaseModel):
     position: int
     is_won_stage: bool
     is_lost_stage: bool
+
+class ForgotPasswordRequest(BaseModel):
+    email: str = Field(..., description="Registered email address or username")
+
+class ResetPasswordRequest(BaseModel):
+    token: str = Field(..., description="Password reset JWT token")
+    new_password: str = Field(..., min_length=8, description="New password, minimum 8 characters")
+
+class ActionResponse(BaseModel):
+    message: str
+    detail: Optional[str] = None
+    reset_link: Optional[str] = None

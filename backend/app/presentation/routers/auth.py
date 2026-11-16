@@ -82,3 +82,36 @@ async def get_me(
     resp = UserProfileResponse.model_validate(current_user)
     resp.tenant = TenantResponse.model_validate(tenant)
     return resp
+
+from app.presentation.schemas.auth import (
+    ForgotPasswordRequest,
+    ResetPasswordRequest,
+    ActionResponse
+)
+
+@router.post(
+    "/forgot-password",
+    response_model=ActionResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Request a password reset link by email or username"
+)
+async def forgot_password(
+    req: ForgotPasswordRequest,
+    db: Annotated[AsyncSession, Depends(get_db)]
+):
+    service = AuthService(db)
+    return await service.forgot_password(req.email)
+
+
+@router.post(
+    "/reset-password",
+    response_model=ActionResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Reset password using a valid reset token"
+)
+async def reset_password(
+    req: ResetPasswordRequest,
+    db: Annotated[AsyncSession, Depends(get_db)]
+):
+    service = AuthService(db)
+    return await service.reset_password(req.token, req.new_password)

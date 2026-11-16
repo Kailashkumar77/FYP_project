@@ -28,6 +28,12 @@ class Settings(BaseSettings):
     MAX_FAILED_LOGIN_ATTEMPTS: int = 5
     ACCOUNT_LOCKOUT_MINUTES: int = 15
 
+    # SuperAdmin Credentials (Configured via env)
+    SUPERADMIN_USERNAME: str = "superAdmin"
+    SUPERADMIN_EMAIL: str = "superadmin@intellicrm.ai"
+    SUPERADMIN_PASSWORD: str = "Admin1234"
+    FRONTEND_URL: str = "http://localhost:3000"
+
     # Database
     DATABASE_URL: str = "sqlite+aiosqlite:///./intellicrm.db"
 

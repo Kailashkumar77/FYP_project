@@ -37,7 +37,43 @@ async def seed_data():
         existing_tenant = result.scalar_one_or_none()
 
         if existing_tenant:
-            print("Database already contains demo workspace: apex-software.")
+            # Ensure superadmin exists and credentials are up to date
+            from app.core.config import settings
+            admin_query = await session.execute(
+                select(User).where(
+                    (User.email == settings.SUPERADMIN_USERNAME) |
+                    (User.email == settings.SUPERADMIN_EMAIL)
+                )
+            )
+            existing_superadmin = admin_query.scalars().first()
+            if not existing_superadmin:
+                superadmin_user = User(
+                    tenant_id=existing_tenant.id,
+                    full_name="Super Administrator",
+                    email=settings.SUPERADMIN_USERNAME,
+                    password_hash=hash_password(settings.SUPERADMIN_PASSWORD),
+                    role=UserRole.ADMIN.value,
+                    phone="+92 300 0000000",
+                    is_active=True,
+                    is_verified=True
+                )
+                admin_alias = User(
+                    tenant_id=existing_tenant.id,
+                    full_name="Super Administrator",
+                    email=settings.SUPERADMIN_EMAIL,
+                    password_hash=hash_password(settings.SUPERADMIN_PASSWORD),
+                    role=UserRole.ADMIN.value,
+                    phone="+92 300 0000000",
+                    is_active=True,
+                    is_verified=True
+                )
+                session.add_all([superadmin_user, admin_alias])
+                await session.commit()
+                print(f"SuperAdmin provisioned in existing tenant: {settings.SUPERADMIN_USERNAME}")
+            else:
+                existing_superadmin.password_hash = hash_password(settings.SUPERADMIN_PASSWORD)
+                await session.commit()
+                print(f"SuperAdmin credentials updated: {settings.SUPERADMIN_USERNAME}")
             return
 
         print("Seeding demo workspace: Apex Software Solutions...")
@@ -53,27 +89,31 @@ async def seed_data():
         await session.flush()
 
         # 2. Create Users
-        admin_user = User(
+        from app.core.config import settings
+
+        superadmin_user = User(
             tenant_id=tenant.id,
-            full_name="Kailash Kumar (Admin)",
-            email="admin@intellicrm.ai",
-            password_hash=hash_password("Admin123!"),
+            full_name="Super Administrator",
+            email=settings.SUPERADMIN_USERNAME,
+            password_hash=hash_password(settings.SUPERADMIN_PASSWORD),
             role=UserRole.ADMIN.value,
-            phone="+92 300 1234567",
+            phone="+92 300 0000000",
             is_active=True,
             is_verified=True
         )
-        agent_user = User(
+        admin_alias = User(
             tenant_id=tenant.id,
-            full_name="Iqra Qasim (Sales Agent)",
-            email="agent@intellicrm.ai",
-            password_hash=hash_password("Agent123!"),
-            role=UserRole.SALES_AGENT.value,
-            phone="+92 301 7654321",
+            full_name="Super Administrator",
+            email=settings.SUPERADMIN_EMAIL,
+            password_hash=hash_password(settings.SUPERADMIN_PASSWORD),
+            role=UserRole.ADMIN.value,
+            phone="+92 300 0000000",
             is_active=True,
             is_verified=True
         )
-        session.add_all([admin_user, agent_user])
+        admin_user = superadmin_user
+        agent_user = superadmin_user
+        session.add_all([superadmin_user, admin_alias])
         await session.flush()
 
         # 3. Create Pipeline Stages
@@ -103,7 +143,7 @@ async def seed_data():
             Lead(
                 tenant_id=tenant.id,
                 stage_id=stage_map["Proposal Sent"].id,
-                assigned_user_id=agent_user.id,
+                assigned_user_id=superadmin_user.id,
                 company_name="Fintech Horizons Ltd",
                 contact_name="Sarah Jenkins",
                 contact_email="sarah.j@fintechhorizons.com",
@@ -135,7 +175,7 @@ async def seed_data():
             Lead(
                 tenant_id=tenant.id,
                 stage_id=stage_map["New"].id,
-                assigned_user_id=agent_user.id,
+                assigned_user_id=superadmin_user.id,
                 company_name="MedCare Telehealth",
                 contact_name="Dr. Elena Rostova",
                 contact_email="elena@medcare-telehealth.com",
@@ -151,7 +191,7 @@ async def seed_data():
             Lead(
                 tenant_id=tenant.id,
                 stage_id=stage_map["Contacted"].id,
-                assigned_user_id=agent_user.id,
+                assigned_user_id=superadmin_user.id,
                 company_name="LogiTrans Fleet Management",
                 contact_name="David Chen",
                 contact_email="dchen@logitrans.net",
@@ -183,7 +223,7 @@ async def seed_data():
             Lead(
                 tenant_id=tenant.id,
                 stage_id=stage_map["Lost"].id,
-                assigned_user_id=agent_user.id,
+                assigned_user_id=superadmin_user.id,
                 company_name="QuickMart Express",
                 contact_name="Tina Reynolds",
                 contact_email="tina@quickmartexpress.com",
@@ -227,7 +267,7 @@ async def seed_data():
             ),
             Client(
                 tenant_id=tenant.id,
-                account_manager_id=agent_user.id,
+                account_manager_id=superadmin_user.id,
                 company_name="OmniRetail Global",
                 primary_contact="Thomas Wright",
                 contact_email="twright@omniretail.com",
@@ -252,7 +292,7 @@ async def seed_data():
             ),
             ActivityLog(
                 tenant_id=tenant.id,
-                user_id=agent_user.id,
+                user_id=superadmin_user.id,
                 action="UPDATE",
                 entity_type="LEAD",
                 entity_id=sample_leads[0].id,

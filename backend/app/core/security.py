@@ -85,3 +85,24 @@ def decode_token(token: str) -> Optional[Dict[str, Any]]:
         return payload
     except (jwt.PyJWTError, Exception):
         return None
+
+def create_password_reset_token(email: str, user_id: str) -> str:
+    """Generates a secure 15-minute password reset JWT token."""
+    now = datetime.now(timezone.utc)
+    expire = now + timedelta(minutes=15)
+    payload = {
+        "sub": user_id,
+        "email": email,
+        "type": "password_reset",
+        "iat": now,
+        "exp": expire,
+    }
+    return jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+
+
+def verify_password_reset_token(token: str) -> Optional[Dict[str, Any]]:
+    """Validates the password reset token and ensures correct token type."""
+    payload = decode_token(token)
+    if not payload or payload.get("type") != "password_reset":
+        return None
+    return payload

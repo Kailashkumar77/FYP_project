@@ -120,3 +120,13 @@ class DashboardMetricsResponse(BaseModel):
     stages: List[StageMetric]
     recent_leads: List[LeadResponse]
     recent_clients: List[ClientResponse]
+
+class LeadScoringAnalysis(BaseModel):
+    lead_id: str
+    company_name: str
+    overall_score: float
+    grade: str # HOT, WARM, COLD
+    conversion_probability: float
+    factor_breakdown: Dict[str, Any]
+    ai_recommendation: str
+    next_best_actions: List[str]
