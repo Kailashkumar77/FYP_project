@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Sparkles, ArrowRight, Lock, User, Eye, EyeOff, Globe } from "lucide-react";
 import { api } from "@/lib/api";
 
@@ -39,7 +40,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-[#f0f4f9] flex flex-col justify-between items-center px-4 py-8 sm:py-12 selection:bg-blue-100">
       <div className="w-full flex-1 flex items-center justify-center">
         {/* Google-style Dual-Column Split Card */}
-        <div className="w-full max-w-6xl bg-white rounded-[28px] border border-[#e1e3e1] shadow-[0_1px_3px_0_rgba(60,64,67,0.3),0_4px_8px_3px_rgba(60,64,67,0.15)] flex flex-col overflow-hidden">
+        <div className="w-full max-w-4xl bg-white rounded-[28px] border border-[#e1e3e1] shadow-[0_1px_3px_0_rgba(60,64,67,0.3),0_4px_8px_3px_rgba(60,64,67,0.15)] flex flex-col overflow-hidden">
           
           {/* Main Content Area */}
           <div className="p-8 sm:p-12 md:p-14 pb-8 sm:pb-10">
@@ -87,7 +88,7 @@ export default function LoginPage() {
                   {/* Username / Email field */}
                   <div className="relative">
                     <label className="block text-xs font-medium text-[#444746] mb-1.5">
-                      Username
+                      Username or Email
                     </label>
                     <div className="relative">
                       <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -104,9 +105,17 @@ export default function LoginPage() {
 
                   {/* Password field */}
                   <div className="relative">
-                    <label className="block text-xs font-medium text-[#444746] mb-1.5">
-                      Password
-                    </label>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-xs font-medium text-[#444746]">
+                        Password
+                      </label>
+                      <Link
+                        href="/forgot-password"
+                        className="text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+                      >
+                        Forgot password?
+                      </Link>
+                    </div>
                     <div className="relative">
                       <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
                       <input
@@ -133,7 +142,10 @@ export default function LoginPage() {
 
                   {/* Notice Text */}
                   <p className="text-xs text-[#444746] leading-relaxed">
-                    Need access to this CRM? Contact your workspace administrator to invite your account.
+                    Need access to this CRM? Contact your workspace administrator or{" "}
+                    <Link href="/register" className="text-blue-600 font-semibold hover:underline">
+                      register a new agency
+                    </Link>.
                   </p>
                 </form>
               </div>
@@ -146,8 +158,13 @@ export default function LoginPage() {
 
           {/* Bottom Card Footer with Action Button */}
           <div className="px-8 sm:px-12 md:px-14 py-4 sm:py-5 flex items-center justify-between bg-white">
-            
-            <div className="flex items-center justify-end w-full sm:w-auto ml-auto">
+            <Link
+              href="/register"
+              className="text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+            >
+              Sign up as new Agency
+            </Link>
+            <div className="flex items-center justify-end">
               <button
                 type="submit"
                 form="login-form"

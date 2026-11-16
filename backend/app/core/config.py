@@ -30,7 +30,7 @@ class Settings(BaseSettings):
 
     # SuperAdmin Credentials (Configured via env)
     SUPERADMIN_USERNAME: str = "superAdmin"
-    SUPERADMIN_EMAIL: str = "superadmin@intellicrm.ai"
+    SUPERADMIN_EMAIL: str = "sahilkhiyatani25@gmail.com"
     SUPERADMIN_PASSWORD: str = "Admin1234"
     FRONTEND_URL: str = "http://localhost:3000"
 
