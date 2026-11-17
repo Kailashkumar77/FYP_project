@@ -114,14 +114,7 @@ export default function DashboardPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={fetchMetrics}
-            className="text-slate-600"
-          >
-            <RefreshCw className="w-3.5 h-3.5" /> Refresh
-          </Button>
+        
           <Link href="/leads/new">
             <Button size="sm">
               <Plus className="w-4 h-4" /> Add Lead
@@ -230,18 +223,10 @@ export default function DashboardPage() {
         {/* Agency Status Card */}
         <Card>
           <CardHeader>
-            <CardTitle>Midterm Status</CardTitle>
+            <CardTitle>Status</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-800">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" /> Database Connectivity
-              </div>
-              <p className="text-[11px] text-slate-600 leading-relaxed">
-                PostgreSQL persistence confirmed via SQLAlchemy 2.x async engine. All dashboard numbers are real query outputs.
-              </p>
-            </div>
-
+          
             <div className="space-y-2 pt-2">
               <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
                 Quick Navigation

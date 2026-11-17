@@ -87,8 +87,8 @@ export default function LeadsPage() {
           </p>
         </div>
         <Link href="/leads/new">
-          <Button size="sm">
-            <Plus className="w-4 h-4" /> Add New Lead
+          <Button size="sm" className="bg-amber-500 hover:bg-amber-600 text-white font-semibold border border-amber-500">
+            <Plus className="w-4 h-4 text-white" /> Add New Lead
           </Button>
         </Link>
       </div>

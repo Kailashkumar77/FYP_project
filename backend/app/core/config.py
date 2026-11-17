@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     # Security
     SECRET_KEY: str = "intellicrm-super-secret-development-key-change-in-prod-32bytes"
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     MAX_FAILED_LOGIN_ATTEMPTS: int = 5
     ACCOUNT_LOCKOUT_MINUTES: int = 15
@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     FRONTEND_URL: str = "http://localhost:3000"
 
     # Database
-    DATABASE_URL: str = "sqlite+aiosqlite:///./intellicrm.db"
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:admin@localhost:8000/intellicrm"
 
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [

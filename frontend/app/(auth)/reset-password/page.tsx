@@ -61,22 +61,38 @@ function ResetPasswordForm() {
   };
 
   return (
-    <div className="w-full max-w-xl bg-white rounded-[28px] border border-[#e1e3e1] shadow-[0_1px_3px_0_rgba(60,64,67,0.3),0_4px_8px_3px_rgba(60,64,67,0.15)] flex flex-col overflow-hidden">
+    <div className="w-full max-w-xl bg-white rounded-3xl border border-slate-200 shadow-xl flex flex-col overflow-hidden">
       <div className="p-8 sm:p-10 md:p-12">
         {/* Brand */}
         <div className="flex items-center gap-2.5 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-blue-500 flex items-center justify-center text-white shadow-md shadow-blue-500/25">
-            <Sparkles className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center p-2 shadow-xs shrink-0">
+            <svg viewBox="0 0 32 32" className="w-full h-full" fill="none">
+              <path
+                d="M16 6L25 11V21L16 26L7 21V11L16 6Z"
+                stroke="#FFFFFF"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M16 6V16M16 16L25 21M16 16L7 21"
+                stroke="#FFFFFF"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle cx="16" cy="16" r="2.2" fill="#FFFFFF" />
+            </svg>
           </div>
-          <span className="text-xl font-bold tracking-tight text-[#1f1f1f]">
-            IntelliCRM <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-bold border border-blue-200">AI</span>
+          <span className="text-xl font-bold tracking-tight text-slate-900">
+            IntelliCRM <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 font-bold border border-amber-300">AI</span>
           </span>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-semibold text-[#1f1f1f] tracking-tight mb-2">
+        <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight mb-2">
           Set new password
         </h1>
-        <p className="text-sm text-[#444746] font-normal leading-relaxed mb-6">
+        <p className="text-sm text-slate-600 font-normal leading-relaxed mb-6">
           Please enter and confirm your new secure password.
         </p>
 
@@ -90,7 +106,7 @@ function ResetPasswordForm() {
         {!success ? (
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-medium text-[#444746] mb-1.5">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 New Password (minimum 8 characters)
               </label>
               <div className="relative">
@@ -102,7 +118,7 @@ function ResetPasswordForm() {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Enter new password"
-                  className="w-full pl-10 pr-11 py-3 text-sm bg-white border border-[#747775] hover:border-[#1f1f1f] rounded-lg text-[#1f1f1f] placeholder:text-[#8e918f] focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all"
+                  className="w-full pl-10 pr-11 py-3 text-sm bg-slate-50/50 border border-slate-300 hover:border-slate-400 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 focus:bg-white transition-all"
                 />
                 <button
                   type="button"
@@ -115,7 +131,7 @@ function ResetPasswordForm() {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-[#444746] mb-1.5">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Confirm New Password
               </label>
               <div className="relative">
@@ -127,7 +143,7 @@ function ResetPasswordForm() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm new password"
-                  className="w-full pl-10 pr-4 py-3 text-sm bg-white border border-[#747775] hover:border-[#1f1f1f] rounded-lg text-[#1f1f1f] placeholder:text-[#8e918f] focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all"
+                  className="w-full pl-10 pr-4 py-3 text-sm bg-slate-50/50 border border-slate-300 hover:border-slate-400 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 focus:bg-white transition-all"
                 />
               </div>
             </div>
@@ -135,13 +151,13 @@ function ResetPasswordForm() {
             <button
               type="submit"
               disabled={loading || !token}
-              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-all shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-60 cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm transition-all border border-amber-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 disabled:opacity-60 cursor-pointer"
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
-                  Update Password & Save <ArrowRight className="w-4 h-4" />
+                  Update Password & Save <ArrowRight className="w-4 h-4 text-white" />
                 </>
               )}
             </button>
@@ -154,26 +170,26 @@ function ResetPasswordForm() {
                 Password Reset Successfully!
               </div>
               <p className="leading-relaxed">
-                Your new password has been securely updated and stored. If this was superAdmin, your environment file has been automatically synchronized.
+                Your new password has been securely updated in PostgreSQL.
               </p>
             </div>
 
             <div className="pt-2">
               <Link
                 href="/login"
-                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-all shadow-sm"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm transition-all shadow-sm"
               >
-                Go to Sign In <ArrowRight className="w-4 h-4" />
+                Go to Sign In <ArrowRight className="w-4 h-4 text-white" />
               </Link>
             </div>
           </div>
         )}
       </div>
 
-      <div className="px-8 sm:px-10 md:px-12 py-4 bg-slate-50 border-t border-[#e1e3e1] flex items-center justify-between text-xs">
+      <div className="px-8 sm:px-10 md:px-12 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs">
         <Link
           href="/login"
-          className="font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+          className="font-semibold text-slate-700 hover:text-slate-900 hover:underline"
         >
           Return to Sign In
         </Link>
@@ -185,9 +201,9 @@ function ResetPasswordForm() {
 
 export default function ResetPasswordPage() {
   return (
-    <div className="min-h-screen bg-[#f0f4f9] flex flex-col justify-between items-center px-4 py-8 sm:py-12 selection:bg-blue-100 font-sans">
+    <div className="min-h-screen bg-white flex flex-col justify-between items-center px-4 py-8 sm:py-12 font-sans">
       <div className="w-full flex-1 flex items-center justify-center">
-        <Suspense fallback={<div className="p-8 text-center text-sm text-slate-500">Loading form...</div>}>
+        <Suspense fallback={<div className="p-8 text-center text-sm text-slate-400">Loading form...</div>}>
           <ResetPasswordForm />
         </Suspense>
       </div>

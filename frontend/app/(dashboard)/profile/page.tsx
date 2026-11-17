@@ -87,34 +87,18 @@ export default function ProfilePage() {
       {/* Profile Overview Card */}
       <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-5">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-2xl shadow-md shadow-blue-500/20">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-yellow-500 to-yellow-500 text-white flex items-center justify-center font-bold text-2xl shadow-md shadow-blue-500/20">
             {profile?.full_name ? profile.full_name[0].toUpperCase() : "U"}
           </div>
           <div>
             <h3 className="text-lg font-bold text-slate-900">
               {profile?.full_name}
             </h3>
-            <p className="text-xs text-slate-500 font-medium">{profile?.email}</p>
-            <div className="flex items-center gap-2 mt-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-                <Shield className="w-3.5 h-3.5" />
-                {profile?.role?.replace("_", " ")}
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                Verified Account
-              </span>
-            </div>
+    
           </div>
         </div>
 
-        <div className="text-right sm:border-l sm:border-slate-100 sm:pl-6 text-xs text-slate-500 space-y-1">
-          <p>
-            Agency Workspace: <strong className="text-slate-800">Apex Software Solutions</strong>
-          </p>
-          <p>
-            Database Mode: <strong className="text-emerald-600 font-semibold">PostgreSQL</strong>
-          </p>
-        </div>
+  
       </div>
 
       {/* Edit Form */}
@@ -175,7 +159,7 @@ export default function ProfilePage() {
 
         <div className="flex items-center justify-end">
           <Button type="submit" isLoading={saving}>
-            <Save className="w-4 h-4 mr-1.5" /> Save Changes to PostgreSQL
+             Save Changes
           </Button>
         </div>
       </form>

@@ -33,26 +33,42 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f0f4f9] flex flex-col justify-between items-center px-4 py-8 sm:py-12 selection:bg-blue-100 font-sans">
+    <div className="min-h-screen bg-white flex flex-col justify-between items-center px-4 py-8 sm:py-12 font-sans">
       <div className="w-full flex-1 flex items-center justify-center">
-        <div className="w-full max-w-xl bg-white rounded-[28px] border border-[#e1e3e1] shadow-[0_1px_3px_0_rgba(60,64,67,0.3),0_4px_8px_3px_rgba(60,64,67,0.15)] flex flex-col overflow-hidden">
+        <div className="w-full max-w-xl bg-white rounded-3xl border border-slate-200 shadow-xl flex flex-col overflow-hidden">
           
           <div className="p-8 sm:p-10 md:p-12">
             {/* Header Brand */}
             <div className="flex items-center gap-2.5 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-blue-500 flex items-center justify-center text-white shadow-md shadow-blue-500/25">
-                <Sparkles className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center p-2 shadow-xs shrink-0">
+                <svg viewBox="0 0 32 32" className="w-full h-full" fill="none">
+                  <path
+                    d="M16 6L25 11V21L16 26L7 21V11L16 6Z"
+                    stroke="#FFFFFF"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M16 6V16M16 16L25 21M16 16L7 21"
+                    stroke="#FFFFFF"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <circle cx="16" cy="16" r="2.2" fill="#FFFFFF" />
+                </svg>
               </div>
-              <span className="text-xl font-bold tracking-tight text-[#1f1f1f]">
-                IntelliCRM <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-bold border border-blue-200">AI</span>
+              <span className="text-xl font-bold tracking-tight text-slate-900">
+                IntelliCRM <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 font-bold border border-amber-300">AI</span>
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-semibold text-[#1f1f1f] tracking-tight mb-2">
+            <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight mb-2">
               Reset your password
             </h1>
-            <p className="text-sm text-[#444746] font-normal leading-relaxed mb-6">
-              Enter the email address or username associated with your workspace account, and we'll send a secure password reset link.
+            <p className="text-sm text-slate-600 font-normal leading-relaxed mb-6">
+              Enter your username or email address, and we'll generate your password reset link.
             </p>
 
             {error && (
@@ -65,7 +81,7 @@ export default function ForgotPasswordPage() {
             {!submitted ? (
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="block text-xs font-medium text-[#444746] mb-1.5">
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                     Username or Registered Email
                   </label>
                   <div className="relative">
@@ -76,7 +92,7 @@ export default function ForgotPasswordPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="superAdmin or your@agency.com"
-                      className="w-full pl-10 pr-4 py-3 text-sm bg-white border border-[#747775] hover:border-[#1f1f1f] rounded-lg text-[#1f1f1f] placeholder:text-[#8e918f] focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all"
+                      className="w-full pl-10 pr-4 py-3 text-sm bg-slate-50/50 border border-slate-300 hover:border-slate-400 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 focus:bg-white transition-all"
                     />
                   </div>
                   <p className="text-[11px] text-slate-400 mt-1.5">
@@ -87,13 +103,13 @@ export default function ForgotPasswordPage() {
                 <button
                   type="submit"
                   disabled={loading || !email.trim()}
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-all shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-60 cursor-pointer"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm transition-all border border-amber-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 disabled:opacity-60 cursor-pointer"
                 >
                   {loading ? (
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   ) : (
                     <>
-                      Send Reset Instructions <ArrowRight className="w-4 h-4" />
+                      Send Reset Instructions <ArrowRight className="w-4 h-4 text-white" />
                     </>
                   )}
                 </button>
@@ -106,19 +122,16 @@ export default function ForgotPasswordPage() {
                     Reset instructions dispatched
                   </div>
                   <p className="leading-relaxed">
-                    A password reset link has been dispatched to the account email. If the email is registered in your agency workspace, please check the inbox.
+                    A password reset link has been dispatched to the account email.
                   </p>
                 </div>
 
                 {resetLink && (
-                  <div className="p-4 rounded-xl bg-blue-50/80 border border-blue-200 text-xs text-blue-900 space-y-2">
-                    <p className="font-semibold text-blue-950">Development / Local Link:</p>
-                    <p className="text-[11px] text-blue-800 leading-relaxed">
-                      For quick testing in development without email delays, click directly:
-                    </p>
+                  <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-xs text-amber-950 space-y-2">
+                    <p className="font-semibold text-amber-900">Development / Local Link:</p>
                     <a
                       href={resetLink}
-                      className="inline-block font-semibold text-blue-700 hover:text-blue-900 underline break-all text-xs"
+                      className="inline-block font-semibold text-amber-800 hover:text-amber-950 underline break-all text-xs"
                     >
                       {resetLink}
                     </a>
@@ -128,7 +141,7 @@ export default function ForgotPasswordPage() {
                 <div className="pt-2">
                   <Link
                     href="/login"
-                    className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm transition-all"
+                    className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm transition-all"
                   >
                     Return to Login
                   </Link>
@@ -137,10 +150,10 @@ export default function ForgotPasswordPage() {
             )}
           </div>
 
-          <div className="px-8 sm:px-10 md:px-12 py-4 bg-slate-50 border-t border-[#e1e3e1] flex items-center justify-between text-xs">
+          <div className="px-8 sm:px-10 md:px-12 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs">
             <Link
               href="/login"
-              className="inline-flex items-center gap-1.5 font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+              className="inline-flex items-center gap-1.5 font-semibold text-slate-700 hover:text-slate-900 hover:underline"
             >
               <ArrowLeft className="w-3.5 h-3.5" /> Back to Sign In
             </Link>

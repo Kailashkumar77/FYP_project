@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <defs>
+    <linearGradient id="brandGrad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <filter id="shadow" x="0" y="2" width="48" height="48" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#D97706" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Hex-Prism Modern Emblem Container -->
+  <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#brandGrad)" filter="url(#shadow)" />
+
+  <!-- Clean Precision Geometric Crest (Layered Hexagon Peak + Dynamic Signal Node) -->
+  <path 
+    d="M24 12L34 18V30L24 36L14 30V18L24 12Z" 
+    stroke="#FFFFFF" 
+    stroke-width="2.5" 
+    stroke-linecap="round" 
+    stroke-linejoin="round"
+    fill="none"
+  />
+
+  <!-- Internal Precision Nexus / Metric Flow -->
+  <path 
+    d="M24 12V24M24 24L34 30M24 24L14 30" 
+    stroke="#FFFFFF" 
+    stroke-width="2" 
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Dynamic Center Core Node -->
+  <circle cx="24" cy="24" r="3" fill="#FFFFFF" />
+  <circle cx="24" cy="24" r="1.5" fill="#D97706" />
+</svg>

@@ -28,16 +28,13 @@ export function Header() {
   };
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200/90 px-8 flex items-center justify-between shrink-0 z-20">
+    <header className="h-16 bg-white border-b border-slate-200 px-8 flex items-center justify-between shrink-0 z-20">
       {/* Title & Status */}
       <div className="flex items-center gap-4">
         <h1 className="text-sm font-semibold text-slate-800">
-          FYP-I Midterm Release • <span className="text-slate-500 font-normal">Weeks 8–9 Demonstration</span>
+          IntelliCRM AI Workspace
         </h1>
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-          Live Database Mode
-        </span>
+      
       </div>
 
       {/* User Actions */}
@@ -47,7 +44,7 @@ export function Header() {
           title="Notifications"
         >
           <Bell className="w-5 h-5" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-600" />
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-500" />
         </button>
 
         <div className="relative">
@@ -55,7 +52,7 @@ export function Header() {
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="flex items-center gap-3 p-1.5 pr-3 rounded-xl hover:bg-slate-100 transition-colors cursor-pointer"
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
+            <div className="w-8 h-8 rounded-lg bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-xs border border-amber-300">
               {user?.full_name ? user.full_name[0].toUpperCase() : "U"}
             </div>
             <div className="text-left hidden sm:block">
